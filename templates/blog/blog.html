@@ -1,0 +1,14 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <h1>Blog</h1><br>
+    {% for note in object_list %}
+        <div class='note-entry'>
+            <h2><a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></h2>
+            <h4>Author: {{ note.author }}</h4>
+            <p>Date: {{ note.date_time }}</p>
+            <p>{{ note.body }}</p>
+            <br>
+        </div>
+    {% endfor %}
+{% endblock content %}
