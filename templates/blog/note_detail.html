@@ -10,4 +10,7 @@
         <p>{{ object.date_time }}</p>
         <p>{{ object.body }}</p>
     </div>
+    <br>
+    <a href="{% url 'note_edit' object.pk %}">+ Edit Blog Note</a><br>
+    <a href="{% url 'note_delete' object.pk %}">+ Delete Blog Note</a>
 {% endblock content %}

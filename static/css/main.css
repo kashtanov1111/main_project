@@ -55,24 +55,26 @@ table {
 }
 body {
     color: rgb(0, 0, 0);
-    font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 300 16px/30px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 header h1 a {
     font-size: 20px;
     font-weight: bold;
 }
 header {
-    padding: 10px ;
+    padding: 10px;
     border-bottom: 1px solid #000;
     margin-bottom: 20px;
 }
+
 a {
     text-decoration: none;
     color:rgb(0, 0, 0);
 }
 a:hover {
-    color: white;
+    color: black;
     background: red;
+    border-radius: 5px;
 }
 h1 {
     font-size: 30px;
@@ -83,4 +85,20 @@ h2 {
 }
 .blog-properties {
   margin: 0 10px;
+}
+li {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+.logging {
+  display: inline-block;
+  float: right;
+}
+.logging a {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+.logo {
+  display: inline-block;
 }

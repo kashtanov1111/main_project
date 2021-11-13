@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #Local
     'accounts',
     'blog',
+    'pages',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +137,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ########
 AUTH_USER_MODEL = 'accounts.CustomUser'
 TIME_ZONE = 'Asia/Yekaterinburg'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
