@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #3rd party
+    'crispy_forms',
+
     #Local
     'accounts',
     'blog',
@@ -139,3 +142,5 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 TIME_ZONE = 'Asia/Yekaterinburg'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

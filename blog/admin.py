@@ -1,4 +1,12 @@
 from django.contrib import admin
-from .models import Note
-# Register your models here.
-admin.site.register(Note)
+from .models import Note, Comment
+
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 0
+
+class NoteAdmin(admin.ModelAdmin):
+    inlines = [ CommentInline,]
+
+admin.site.register(Note, NoteAdmin)
+admin.site.register(Comment)

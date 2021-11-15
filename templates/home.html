@@ -1,6 +1,10 @@
 {% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
 
 {% block content %}
+    <img class='main-photo' src="{% static 'images/new_york.jpg' %}">
     {% if user.is_authenticated %}
         <p>Hello, {{ user.username }}</p>
     {% endif %}

@@ -1,5 +1,7 @@
 {% extends '_base.html' %}
 
+{% block title %}Blog Detail{% endblock title %}
+
 {% block content %}
     <h1>Blog note № {{ object.pk }}</h1>
     <p><a href="{% url 'blog' %}">&lArr; Back to all notes</a></p>
@@ -11,6 +13,6 @@
         <p>{{ object.body }}</p>
     </div>
     <br>
-    <a href="{% url 'note_edit' object.pk %}">+ Edit Blog Note</a><br>
-    <a href="{% url 'note_delete' object.pk %}">+ Delete Blog Note</a>
+        <a href="{% url 'note_edit' object.pk %}">+ Edit Blog Note</a><br>
+        <a href="{% url 'note_delete' object.pk %}">+ Delete Blog Note</a>
 {% endblock content %}

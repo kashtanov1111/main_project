@@ -1,15 +1,21 @@
 {% extends '_base.html' %}
 
+{% block title %}Blog{% endblock title %}
+
 {% block content %}
     <h1>Blog</h1>
     <p><a href="{% url 'note_new' %}">+ Add new note</a></p><br>
     {% for note in object_list %}
         <div class='note-entry'>
             <h2>&#8226; <a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></h2>
-            <h4>Author: {{ note.author }}</h4>
+            <h4 >Author: <span class='author'>{{ note.author }}</span></h4>
             <p>Last change: {{ note.date_time }}</p>
             <p>{{ note.body }}</p>
-            <br>
         </div>
+        {% if note.comments.all %}
+                {% for comment in note.comments.all %}
+                    <p class='comment'><span class='author'>{{ comment.author}}</span> &middot; {{ comment }}</p>
+                {% endfor %}
+        {% endif %}
     {% endfor %}
 {% endblock content %}

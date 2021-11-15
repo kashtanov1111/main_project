@@ -73,7 +73,7 @@ a {
 }
 a:hover {
     color: black;
-    background: red;
+    background: greenyellow;
     border-radius: 5px;
 }
 h1 {
@@ -91,8 +91,9 @@ li {
   margin-left: 20px;
 }
 .logging {
-  display: inline-block;
+  display: block;
   float: right;
+  margin-top: 4px;
 }
 .logging a {
   border: 1px solid black;
@@ -101,4 +102,35 @@ li {
 }
 .logo {
   display: inline-block;
+}
+.btn {
+  background: white;
+  border: 1px solid black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+.btn:hover {
+  background: greenyellow;
+}
+.note-entry {
+  border: 1px solid black;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  border-radius: 10px;
+}
+.comment {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  margin-left: 20px;
+}
+.author {
+  font-weight: bold;
+}
+.main-photo {
+  height: 600px;
+  width: auto;
+  float: right;
 }
