@@ -7,6 +7,7 @@ class CommentInline(admin.TabularInline):
 
 class NoteAdmin(admin.ModelAdmin):
     inlines = [ CommentInline,]
+    list_display = ('title', 'author', 'date_time')
 
 admin.site.register(Note, NoteAdmin)
 admin.site.register(Comment)

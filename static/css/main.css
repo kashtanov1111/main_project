@@ -73,7 +73,7 @@ a {
 }
 a:hover {
     color: black;
-    background: greenyellow;
+    background: red;
     border-radius: 5px;
 }
 h1 {
@@ -91,9 +91,9 @@ li {
   margin-left: 20px;
 }
 .logging {
-  display: block;
-  float: right;
   margin-top: 4px;
+  display: inline-block;
+  float: right;
 }
 .logging a {
   border: 1px solid black;

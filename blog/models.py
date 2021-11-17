@@ -1,8 +1,13 @@
+import uuid
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
 class Note(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False)
     title = models.CharField(max_length=100)
     author = models.ForeignKey(
         'accounts.CustomUser',
@@ -18,6 +23,10 @@ class Note(models.Model):
         return reverse('note_detail', args=[str(self.id)])
 
 class Comment(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False)
     note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name='comments')
     comment = models.CharField(max_length=140)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
