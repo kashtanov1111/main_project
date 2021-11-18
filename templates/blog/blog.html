@@ -17,5 +17,6 @@
                     <p class='comment'><span class='author'>{{ comment.author}}</span> &middot; {{ comment }}</p>
                 {% endfor %}
         {% endif %}
+        <a class='leave_comment' href="{% url 'leave_comment' note.pk %}">+ leave comment</a>
     {% endfor %}
 {% endblock content %}

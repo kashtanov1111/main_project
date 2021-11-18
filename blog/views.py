@@ -44,3 +44,11 @@ class BlogDeleteView(LoginRequiredMixin,UserPassesTestMixin, DeleteView):
         obj = self.get_object()
         return obj.author == self.request.user 
 
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    template_name = 'blog/leave_comment.html'
+    fields = ['note', 'comment']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)

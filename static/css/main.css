@@ -138,3 +138,10 @@ li {
   height: 300px;
   width: auto;
 }
+.input-width {
+  width: 50px;
+}
+.leave_comment {
+  margin-left: 20px;
+  text-decoration: underline;
+}

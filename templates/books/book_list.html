@@ -3,6 +3,9 @@
 {% block title %}Books{% endblock title %}
 
 {% block content %}
+    <form class='form-inline mt-2 mt-md-0' action="{% url 'search_results' %}" method='get'>
+        <input type="text" class='form-control mr-sm-2' name='q' placeholder='Search' aria-label='Search'>
+    </form>
     {% for book in book_list %}
         <div>
             <h2><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h2>
