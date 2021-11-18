@@ -134,3 +134,7 @@ li {
   width: auto;
   float: right;
 }
+.bookcover {
+  height: 300px;
+  width: auto;
+}
