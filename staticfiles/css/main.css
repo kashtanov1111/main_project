@@ -73,7 +73,7 @@ a {
 }
 a:hover {
     color: black;
-    background: red;
+    background: greenyellow;
     border-radius: 5px;
 }
 h1 {
@@ -91,9 +91,9 @@ li {
   margin-left: 20px;
 }
 .logging {
-  margin-top: 4px;
-  display: inline-block;
+  display: block;
   float: right;
+  margin-top: 4px;
 }
 .logging a {
   border: 1px solid black;
@@ -133,15 +133,4 @@ li {
   height: 600px;
   width: auto;
   float: right;
-}
-.bookcover {
-  height: 300px;
-  width: auto;
-}
-.input-width {
-  width: 50px;
-}
-.leave_comment {
-  margin-left: 20px;
-  text-decoration: underline;
 }
