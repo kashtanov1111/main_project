@@ -45,13 +45,13 @@ INSTALLED_APPS = [
     'crispy_forms',
     'allauth',
     'allauth.account',
+    'django_extensions',
 
     #Local
     'accounts',
     'blog',
     'pages',
     'books',
-    'core',
 ]
 
 MIDDLEWARE = [

@@ -3,6 +3,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 
+
 class Note(models.Model):
     id = models.UUIDField(
         primary_key=True,
@@ -36,3 +37,4 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog')
+
