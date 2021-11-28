@@ -4,19 +4,21 @@
 
 {% block content %}
     <h1>Blog</h1>
-    <p><a href="{% url 'note_new' %}">+ Add new note</a></p><br>
+    <p><a href="{% url 'note_new' %}">Add new note</a></p>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for note in object_list %}
-        <div class='note-entry'>
-            <h2>&#8226; <a href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></h2>
-            <h4 >Author: <span class='author'>{{ note.author }}</span></h4>
-            <p>Last change: {{ note.date_time }}</p>
-            <p>{{ note.body }}</p>
-        </div>
-        {% if note.comments.all %}
-                {% for comment in note.comments.all %}
-                    <p class='comment'><span class='author'>{{ comment.author}}</span> &middot; {{ comment }}</p>
-                {% endfor %}
-        {% endif %}
-        <a class='leave_comment' href="{% url 'leave_comment' note.pk %}">+ leave comment</a>
+        <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title"><a class='link-without-underline' href="{% url 'note_detail' note.pk %}">{{ note.title }}</a></h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ note.author }}</h6>
+                <p class="card-text">{{ note.body }}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Last updated {{ note.last_updated }}</small>
+              </div>
+            </div>
+        </div>    
     {% endfor %}
+    <div>
 {% endblock content %}

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.postgres',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +53,11 @@ INSTALLED_APPS = [
     'blog',
     'pages',
     'books',
+    'docc',
+    'docblog',
+    'docstore',
+    'docexample',
+    'polls',
 ]
 
 MIDDLEWARE = [

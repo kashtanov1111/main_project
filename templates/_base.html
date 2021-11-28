@@ -9,21 +9,46 @@
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
     </head>
     <body>
-        <header>
-            <div class='logo'>
-                <h1><a href="{% url 'home' %}">Django Platform</a></h1>
-            </div>
-            <div class='logging'>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">Kashtanov Platform</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Apps
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{% url 'blog' %}">Blog</a></li>
+                    <li><a class="dropdown-item" href="{% url 'book_list' %}">Books</a></li>
+                    <li><a class="dropdown-item" href="{% url 'polls:index' %}">Polls</a></li>
+                  </ul>
+                </li>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'account_change_password' %}">Change password</a>
-                    <a href="{% url 'account_logout' %}">Log Out</a>
-                {% else %}
-                    <a href="{% url 'account_login' %}">Log In</a>
-                    <a href="{% url 'account_signup' %}">Sign Up</a>                 
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Hello, {{ user.username }}</a>
+                    </li>
                 {% endif %}
+              </ul>
+              <form class="d-flex">
+                {% if user.is_authenticated %}
+                  <a class="navbar-button-left btn btn-outline-success" href="{% url 'account_change_password' %}" role="button">Change password</a>
+                  <a class="btn btn-success" href="{% url 'account_logout' %}" role="button">Log out</a>
+                {% else %}
+                  <a class="navbar-button-left btn btn-outline-success" href="{% url 'account_login' %}" role="button">Log In</a>
+                  <a class="btn btn-success" href="{% url 'account_signup' %}" role="button">Sign Up</a>
+                {% endif %}
+              </form>
             </div>
-        </header>
-        <div class='blog-properties'>
+          </div>
+        </nav>
+        <div class='main-part'>
             {% block content %}
             {% endblock content %}
         </div>

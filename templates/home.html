@@ -5,12 +5,4 @@
 
 {% block content %}
     <img class='main-photo' src="{% static 'images/new_york.jpg' %}">
-    {% if user.is_authenticated %}
-        <p>Hello, {{ user.username }}</p>
-    {% endif %}
-    <h2>Apps:</h2>
-    <ul>
-        <li><h2><a href="{% url 'blog' %}">Blog</a></h2></li>
-        <li><h2><a href="{% url 'book_list' %}">Books</a></h2></li>
-    </ul>
 {% endblock content %}

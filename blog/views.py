@@ -1,21 +1,19 @@
-from typing import List
-from .models import Note, Comment
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import get_object_or_404, render
 
-class BlogListView(ListView):
+from .models import Note, Comment
+
+class BlogListView(LoginRequiredMixin, ListView):
     model = Note
     template_name = 'blog/blog.html'
 
-class BlogDetailView(UserPassesTestMixin, DetailView):
+
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Note
     template_name = 'blog/note_detail.html'
-
-    def test_func(self):
-        obj = self.get_object()
-        return obj.author == self.request.user 
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Note
