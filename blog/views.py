@@ -11,9 +11,13 @@ class BlogListView(LoginRequiredMixin, ListView):
     template_name = 'blog/blog.html'
 
 
-class BlogDetailView(LoginRequiredMixin, DetailView):
-    model = Note
-    template_name = 'blog/note_detail.html'
+#class BlogDetailView(LoginRequiredMixin, DetailView):
+#    model = Note
+#    template_name = 'blog/note_detail.html'
+
+def note_detail(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    return render(request, 'blog/note_detail.html', {'note': note})
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Note

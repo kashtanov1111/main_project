@@ -34,14 +34,17 @@ class Note(models.Model):
 
     def last_updated(self):
         delta_time = timezone.now() - self.date_time
-        if delta_time.seconds < 60:
-            return '%s seconds ago' % delta_time.seconds
-        if delta_time.seconds < 60 * 60:
-            return '%s minutes ago' % round(delta_time.seconds / 60)
-        if delta_time.seconds < 60 * 60 * 24:
-            return '%s hours ago' % round(delta_time.seconds / 3600)
-        else:
+        if delta_time.days > 1:
             return '%s days ago' % delta_time.days
+        else:
+            if delta_time.seconds < 60:
+                return '%s seconds ago' % delta_time.seconds
+            if delta_time.seconds < 60 * 60:
+                return '%s minutes ago' % (delta_time.seconds // 60)
+            if delta_time.seconds < 60 * 60 * 24:
+                return '%s hours ago' % (delta_time.seconds // 3600)
+            
+        
 
 class Comment(models.Model):
     id = models.UUIDField(
