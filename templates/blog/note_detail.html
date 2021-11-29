@@ -12,14 +12,14 @@
         <p>{{ note.body }}</p>
     </div>
     <br>
-        {% if object.author == user %}
+        {% if note.author == user %}
             <a href="{% url 'note_edit' note.pk %}">+ Edit Blog Note</a><br>
             <a href="{% url 'note_delete' note.pk %}">+ Delete Blog Note</a>
         {% endif %}
-        <!--{% if note.comments.all %}
+        {% if note.comments.all %}
                 {% for comment in note.comments.all %}
                     <p class='comment'><span class='author'>{{ comment.author}}</span> &middot; {{ comment }}</p>
                 {% endfor %}
         {% endif %}
-        <a class='leave_comment' href="{% url 'leave_comment' note.pk %}">+ leave comment</a>-->
+        <a class='leave_comment' href="{% url 'leave_comment' note.pk %}">+ leave comment</a>
 {% endblock content %}

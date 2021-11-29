@@ -53,11 +53,8 @@ INSTALLED_APPS = [
     'blog',
     'pages',
     'books',
-    'docc',
-    'docblog',
-    'docstore',
-    'docexample',
     'polls',
+    'doc',
 ]
 
 MIDDLEWARE = [

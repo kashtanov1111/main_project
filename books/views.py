@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 
+
 class BookListView(LoginRequiredMixin, ListView):
     model = Book
     context_object_name = 'book_list'
