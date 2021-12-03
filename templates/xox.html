@@ -1,0 +1,41 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <!--<img class='main-photo' src="{% static 'images/new_york.jpg' %}">-->
+    <button id='b' type='button' class='btn btn-primary btn-lg'>Restart</button>
+    <table>
+        <tr>
+            <td id='one'></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <style>
+        td{
+            border: 5px solid black;
+            height: 100px;
+            width: 100px;
+            text-align: center;
+            font-size: 50px;
+        }
+        table{
+            margin: auto;
+        }
+    </style>
+
+    <script src="{% static 'js/xox.js' %}"></script>
+{% endblock content %}
+ 

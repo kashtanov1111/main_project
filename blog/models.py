@@ -34,7 +34,7 @@ class Note(models.Model):
 
     def last_updated(self):
         delta_time = timezone.now() - self.date_time
-        if delta_time.days > 1:
+        if delta_time.days >= 1:
             return '%s days ago' % delta_time.days
         else:
             if delta_time.seconds < 60:

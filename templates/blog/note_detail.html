@@ -21,5 +21,10 @@
                     <p class='comment'><span class='author'>{{ comment.author}}</span> &middot; {{ comment }}</p>
                 {% endfor %}
         {% endif %}
-        <a class='leave_comment' href="{% url 'leave_comment' note.pk %}">+ leave comment</a>
+        <form class="d-flex" action="" method='post'>
+            {% csrf_token %}
+            <input class='comment-text form-control me-2' type="text" name='comment'>
+            <input class='btn btn-success' type="submit" value='Comment'>
+        </form>
+        <!--<a class='leave_comment' href="{% url 'leave_comment' note.pk %}">+ leave comment</a>-->
 {% endblock content %}

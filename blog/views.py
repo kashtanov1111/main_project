@@ -1,6 +1,7 @@
+from django.http.response import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, render
 
@@ -17,7 +18,11 @@ class BlogListView(LoginRequiredMixin, ListView):
 
 def note_detail(request, pk):
     note = get_object_or_404(Note, pk=pk)
-    return render(request, 'blog/note_detail.html', {'note': note})
+    if request.method == 'POST' and request.POST['comment'] != '':
+        note.comments.create(comment=request.POST['comment'], author=request.user)
+        return HttpResponseRedirect(reverse('note_detail', args=(note.pk,)))
+    else:
+        return render(request, 'blog/note_detail.html', {'note': note})
 
 class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Note

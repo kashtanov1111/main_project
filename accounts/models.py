@@ -4,3 +4,4 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     age = models.PositiveIntegerField(null=True, blank=True)
+    city = models.CharField(max_length=100, blank=True)

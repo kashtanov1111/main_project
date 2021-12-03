@@ -18,3 +18,15 @@
 .link-without-underline {
   text-decoration: None;
 }
+.asteriskField {
+  display: none;
+}
+.comment-text {
+  width: 200px;
+}
+.bookcover {
+  height: 200px;
+  width: auto;
+  
+}
+

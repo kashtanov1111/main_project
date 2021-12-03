@@ -150,6 +150,7 @@ MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ########
+ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
 AUTH_USER_MODEL = 'accounts.CustomUser'
 TIME_ZONE = 'Asia/Yekaterinburg'
 
@@ -163,6 +164,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_USERNAME_REQUIRED = False

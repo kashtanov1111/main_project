@@ -14,4 +14,6 @@ urlpatterns = [
     path('<int:num>/', include([
         path('history/', views.history),
         path('edit/', views.edit),]), {'foo': 'baaaaar'}),
+    path('contact/', views.get_contact),
+    path('upload/', views.upload_file),
 ]
