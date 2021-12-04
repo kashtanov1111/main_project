@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from allauth.account.forms import SignupForm
 from django import forms
 
-from .models import CustomUser
+from .models import CustomUser, UserProfileInfo
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -25,3 +25,8 @@ class CustomSignupForm(SignupForm):
         user.city = self.cleaned_data['city']
         user.save()
         return user
+
+class UserProfileinfo(forms.ModelForm):
+    class Meta:
+        model = UserProfileInfo
+        fields = ('portfolio_site', 'profile_pic')

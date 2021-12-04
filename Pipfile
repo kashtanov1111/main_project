@@ -9,8 +9,9 @@ psycopg2-binary = "==2.8.5"
 django-crispy-forms = "==1.9.2"
 django-allauth = "==0.45.0"
 environs = {version = "==9.0.0", extras = ["django"]}
-pillow = "==8.3.2"
+pillow = "==8.4.0"
 django-extensions = "~=3.1.5"
+faker = "==9.9.0"
 
 [dev-packages]
 

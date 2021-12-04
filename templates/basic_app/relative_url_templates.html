@@ -1,0 +1,8 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <h1>WELCOME TO RELATIVE URL TEMPLATES</h1>
+    <a href="{% url 'basic_app:other' %}">Other</a>
+    <a href="{% url 'admin:index' %}">Admin</a>
+    <a href="{% url 'home' %}">Link to Home</a>
+{% endblock content %}

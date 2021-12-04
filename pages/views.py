@@ -9,3 +9,7 @@ class ConnectFourPageView(TemplateView):
 
 class XoxPageView(TemplateView):
     template_name = 'xox.html'
+
+def help(request):
+    context = {'help': 'We can help you!'}
+    return render(request, 'help.html', context)

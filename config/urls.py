@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
@@ -25,5 +26,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('books/', include('books.urls')),
     path('doc/', include('doc.urls')),
+    path('first_app/', include('first_app.urls')),
+    path('companies/', include('companies.urls')),
+    path('basic_app/', include('basic_app.urls')),
     path('', include('pages.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

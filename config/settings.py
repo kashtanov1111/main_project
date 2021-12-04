@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'django_extensions',
+    'faker',
 
     #Local
     'accounts',
@@ -55,6 +56,9 @@ INSTALLED_APPS = [
     'books',
     'polls',
     'doc',
+    'first_app',
+    'companies',
+    'basic_app',
 ]
 
 MIDDLEWARE = [
@@ -106,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 9}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -166,7 +171,7 @@ AUTHENTICATION_BACKENDS = (
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
