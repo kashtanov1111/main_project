@@ -1,0 +1,15 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>This is your Profile</h1>
+    <form enctype="multipart/form-data" method='post'>
+        {% csrf_token %}
+        {{ profile_form|crispy }}
+        <input class='btn-margin-up btn-margin-down btn btn-success' type="submit" value='submit'>
+    </form>
+    {% if user.profile_pic %}
+    <img class='bookcover' src="{{ user.profile_pic.url }}" alt="">
+    {% endif %}
+    
+{% endblock content %}

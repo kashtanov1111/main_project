@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 # Register your models here.
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import CustomUser
+from .models import CustomUser 
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -12,10 +12,10 @@ class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = ['email', 'username', 'age', 'city', 'is_staff', ]
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('age', 'city',)}),
+        (None, {'fields': ('age', 'city', 'portfolio_site', 'profile_pic')}),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
-        (None, {'fields': ('age', 'city', )}),
+        (None, {'fields': ('age', 'city', 'portfolio_site', 'profile_pic' )}),
     )
 
 admin.site.register(CustomUser, CustomUserAdmin)

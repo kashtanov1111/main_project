@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from allauth.account.forms import SignupForm
 from django import forms
 
-from .models import CustomUser, UserProfileInfo
+from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -13,10 +13,10 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('email', 'username', 'age', 'city')
 
 class CustomUserChangeForm(UserChangeForm):
-
+    password = None
     class Meta(UserChangeForm):
         model = CustomUser
-        fields = ('email', 'username', 'age', 'city')
+        fields = ('email', 'username', 'age', 'city', 'portfolio_site', 'profile_pic')
 
 class CustomSignupForm(SignupForm):
     city = forms.CharField(max_length=100, required=False)
@@ -26,7 +26,7 @@ class CustomSignupForm(SignupForm):
         user.save()
         return user
 
-class UserProfileinfo(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = UserProfileInfo
-        fields = ('portfolio_site', 'profile_pic')
+        model = CustomUser
+        fields = ('age', 'city', 'portfolio_site', 'profile_pic')

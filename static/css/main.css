@@ -9,6 +9,9 @@
 .btn-margin-up {
   margin-top: 5px;
 }
+.btn-margin-down {
+  margin-bottom: 5px;
+}
 .form-margin {
   margin: 0 10px;
 }
@@ -31,4 +34,15 @@
 }
 table, th, td{
   border: 2px solid black;
+}
+.username{
+  text-decoration: underline;
+}
+.username:hover{
+  color: #198754;
+}
+.user-photo{
+  width: 2.0em;
+  height: 2.0em;
+  border-radius: 50%;
 }
