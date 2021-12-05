@@ -142,7 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 
-USE_S3 = env.bool('USE_S3')
+USE_S3 = env.bool('USE_S3', default=True)
 
 if USE_S3:
     # aws settings
