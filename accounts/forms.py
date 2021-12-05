@@ -12,6 +12,7 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ('email', 'username', 'age', 'city')
 
 class CustomUserChangeForm(UserChangeForm):
+    profile_pic = forms.ImageField(widget=forms.FileInput, required=False)
     password = None
     class Meta(UserChangeForm):
         model = CustomUser
