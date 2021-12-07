@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     #Local
     'accounts',
     'blog',
+    'blog2',
     'pages',
     'books',
     'polls',

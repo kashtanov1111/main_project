@@ -1,0 +1,11 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    <h1>Welcome to a list of all the schools!</h1>
+    <a class='btn btn-primary' href="{% url 'basic_app:create' %}">Add School</a>
+    <ol>
+        {% for school in schools %}
+            <h2><li><a href="{% url 'basic_app:school_detail' school.pk %}">{{ school.name }}</a></li></h2>
+        {% endfor %}
+    </ol>
+{% endblock content %}
