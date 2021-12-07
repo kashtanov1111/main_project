@@ -2,7 +2,11 @@
 {% load crispy_forms_tags %}
 
 {% block contentt %}
+    {% if form.instance.pk %}
+    <h1>Edit Post</h1>
+    {% else %}
     <h1>New Post</h1>
+    {% endif %}
     <form class='post-form' method='post'>
         {% csrf_token %}
         {{form|crispy}}
