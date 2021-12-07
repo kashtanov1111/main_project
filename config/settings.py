@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'first_app',
     'companies',
     'basic_app',
+    'ssocial',
 ]
 
 MIDDLEWARE = [
