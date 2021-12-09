@@ -4,8 +4,12 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-    <img class='main-photo' src="{% static 'images/new_york.jpg' %}">
-    <h1>Kashtanov Project</h1>
-    <script src="{% static 'js/main.js' %}"></script>
+    <div class='container'>
+        <div class='row'>
+            <h1 class='col-md-4'>Kashtanov Project</h1>
+            <img class='col-md-8' src="{% static 'images/new_york.jpg' %}">           
+        </div>
+    </div>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock content %}
  

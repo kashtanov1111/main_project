@@ -3,9 +3,11 @@
 {% block contentt %}
     <div class='posts-page'>
         <div class='container'>
-            {% block prepost %}{% endblock prepost %}
-            {% block post_content %}{% endblock post_content %}
-            {% block post_post %}{% endblock post_post %}
+            <div class='row'>
+                {% block prepost %}{% endblock prepost %}
+                {% block post_content %}{% endblock post_content %}
+                {% block post_post %}{% endblock post_post %}
+            </div>
         </div>
     </div>
 {% endblock contentt %}

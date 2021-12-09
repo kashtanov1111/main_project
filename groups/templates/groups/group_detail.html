@@ -1,6 +1,7 @@
 {% extends 'groups/group_base.html' %}
 
 {% block pregroup %}
+<div class='col-md-4'>
     <h1>{{ group.name }}</h1>
     <h2>Member Count: {{ group.members.count }}</h2>
     <div class='content'>
@@ -14,6 +15,7 @@
             <span class='bi bi-person-plus-fill'></span> Join</a>
         {% endif %}
     </div>
+</div>
 {% endblock  %}
 
 {% block group_content %}

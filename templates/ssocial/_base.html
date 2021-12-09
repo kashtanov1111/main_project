@@ -5,13 +5,14 @@
 <div class='main-part-no'>
     <nav class=" navbar sticky-top ">
         <div class="container-fluid">
-          <a class="mynav navbar-brand" href="{% url 'groups:all' %}">Start Social</a>
+          <a class="mynav navbar-brand" href="{% url 'groups:all' %}">Star Social</a>
           <div class='d-flex'>
             {% if user.is_authenticated %}
             <a class='mynav nav-link-margin-right' href="{% url 'posts:for_user' user.username %}">@{{ user.username }}</a>
-            <a class=' mynav nav-link-margin-right' href="{% url 'posts:create' %}">Post</a>
+            <a class=' mynav nav-link-margin-right' href="{% url 'posts:all' %}">Posts</a>
             <a class='mynav nav-link-margin-right' href="{% url 'groups:all' %}">Groups</a>
-            <a class='mynav' href="{% url 'groups:create'  %}">Create Group</a>
+            <a class='mynav nav-link-margin-right' href="{% url 'groups:create'  %}">New Group</a>
+            <a class=' mynav ' href="{% url 'posts:create' %}">New Post</a>
           {% endif %}
         </div>
         </div>
