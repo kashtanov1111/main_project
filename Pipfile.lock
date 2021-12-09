@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ce7b14906f215b243c4b9bc7c83825563a59a0dd49d046b8b994269423634382"
+            "sha256": "61c82df8eae6f91cef9768d374f1015dc702311c05c167514ee4a55a62d8f901"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -173,6 +173,14 @@
             "index": "pypi",
             "version": "==0.45.0"
         },
+        "django-braces": {
+            "hashes": [
+                "sha256:28f00b0f98368c9a37f30cce6087fc57127f0a24c5b8b449f9e1245bded6405d",
+                "sha256:f451d08ffc1078d81209a2e17f2219bce20196928853c82405451b18a46875e0"
+            ],
+            "index": "pypi",
+            "version": "==1.15.0"
+        },
         "django-cache-url": {
             "hashes": [
                 "sha256:5514ca3a2075c6b956b3d0a5c540654d32b004e76340d7bdabf6661135b5f218",
@@ -262,6 +270,13 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==3.14.1"
+        },
+        "misaka": {
+            "hashes": [
+                "sha256:62f35254550095d899fc2ab8b33e156fc5e674176f074959cbca43cf7912ecd7"
+            ],
+            "index": "pypi",
+            "version": "==2.1.1"
         },
         "oauthlib": {
             "hashes": [

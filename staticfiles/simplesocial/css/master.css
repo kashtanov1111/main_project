@@ -1,0 +1,22 @@
+.main-part-no {
+    margin: -10px;
+    overflow: hidden;
+    background: black;
+    color:white;
+    height: 100%;
+  }
+.mynav{
+  color: white;
+  text-decoration: none;
+}
+.mynav:hover{
+  color: #ffc107;
+  text-decoration: underline;
+}
+.navbar-brand:hover{
+  color: #ffc107;
+  text-decoration: none;
+}
+.no-textdecor{
+  text-decoration: none;
+}

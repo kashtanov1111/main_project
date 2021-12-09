@@ -31,7 +31,8 @@ urlpatterns = [
     path('first_app/', include('first_app.urls')),
     path('companies/', include('companies.urls')),
     path('basic_app/', include('basic_app.urls')),
-    path('ssocial/', include('ssocial.urls')),
+    path('groups/', include('groups.urls')),
+    path('posts/', include('posts.urls')),
     path('', include('pages.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

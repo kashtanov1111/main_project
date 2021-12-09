@@ -64,6 +64,8 @@ INSTALLED_APPS = [
     'companies',
     'basic_app',
     'ssocial',
+    'posts',
+    'groups',
 ]
 
 MIDDLEWARE = [

@@ -46,3 +46,6 @@ table, th, td{
   height: 2.0em;
   border-radius: 50%;
 }
+.nav-link-margin-right{
+  margin-right: 10px;
+}
