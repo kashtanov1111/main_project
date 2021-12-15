@@ -9,6 +9,9 @@ class GroupMemberInline(admin.TabularInline):
 class GroupAdmin(admin.ModelAdmin):
     inlines = [GroupMemberInline,]
     list_display = ('name', 'slug', 'description', 'description_html')
+    fields = ['name', 'description', 'slug']
+    search_fields = ['name', 'description']
+    list_filter = ['name']
 
 admin.site.register(GroupMember)
 admin.site.register(Group, GroupAdmin)

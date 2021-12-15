@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'books',
     'polls',
     'doc',
+    'doc4',
     'first_app',
     'companies',
     'basic_app',
@@ -191,7 +192,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ########
 ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
 AUTH_USER_MODEL = 'accounts.CustomUser'
-TIME_ZONE = 'Asia/Yekaterinburg'
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
