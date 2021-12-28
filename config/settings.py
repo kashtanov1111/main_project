@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'ssocial',
     'posts',
     'groups',
+    'products',
 ]
 
 MIDDLEWARE = [
