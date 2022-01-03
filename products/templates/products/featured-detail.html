@@ -1,0 +1,9 @@
+{% extends '_base.html' %}
+
+{% block content %}
+    {{ object.title }}<br>
+    {{ object.description }}<br>
+    {% if object.image %}
+        <img src="{{ object.image.url }}" alt="">
+    {% endif %}
+{% endblock content %}

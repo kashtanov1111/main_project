@@ -68,6 +68,9 @@ INSTALLED_APPS = [
     'posts',
     'groups',
     'products',
+    'products_search',
+    'products_tags',
+    'products_carts',
 ]
 
 MIDDLEWARE = [

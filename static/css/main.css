@@ -31,9 +31,9 @@
   width: auto;
   
 }
-table, th, td{
+/* table, th, td{
   border: 2px solid black;
-}
+} */
 .username{
   text-decoration: underline;
 }
