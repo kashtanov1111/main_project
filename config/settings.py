@@ -71,6 +71,9 @@ INSTALLED_APPS = [
     'products_search',
     'products_tags',
     'products_carts',
+    'products_orders',
+    'products_billing',
+    'products_addresses',
 ]
 
 MIDDLEWARE = [
@@ -194,7 +197,7 @@ STATICFILES_DIRS = [str(BASE_DIR.joinpath('static'))]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ########
-ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm'}
+ACCOUNT_FORMS = {'signup': 'accounts.forms.CustomSignupForm', 'login': 'accounts.forms.ProductsLoginForm'}
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 

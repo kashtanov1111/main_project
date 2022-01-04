@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.urls import reverse
 
-from .utils import unique_slug_generator
+from config.utils import unique_slug_generator
 
 def get_filename_ext(filename):
     base_name = os.path.basename(filename)

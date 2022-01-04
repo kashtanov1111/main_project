@@ -1,0 +1,59 @@
+{% extends 'products/_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block contentt %}
+{{ object.order_id }} -- {{ object.cart}}
+    {% if not billing_profile %}
+        <div class='row'>
+            <div class='col-md-6'>
+                <form class='form-margin' action="{% url 'account_login' %}" method='post'>
+                    <h1>Log In</h1>
+                    {% if next %}
+                        <input type="hidden" name='next' value='{{ next }}'>
+                    {% endif %}
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class='btn btn-primary' type='submit'>Log In</button>
+                </form>
+            </div>
+            <div class='col-md-6'>
+                {% url 'guest_register' as guest_register_url %}
+                <form class='form-margin' action="{{ guest_register_url }}" method='post'>
+                    <h1>Continue as Guest</h1>
+                    {% if next %}
+                        <input type="hidden" name='next' value='{{ next }}'>
+                    {% endif %}
+                    {{ guest_form|crispy }}
+                    {% csrf_token %}
+                    <button class='btn btn-primary my-1' type='submit'>Submit</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        {% if not object.shipping_address %}
+            <div class='row'>
+                <div class='col-md-6  mx-auto '>
+                    <h1>Shipping Address</h1>
+                    <hr>
+                    {% url 'checkout_address_create' as checkout_address_create %}
+                    {% include 'addresses/form.html' with form=address_form action_url=checkout_address_create address_type='shipping' %}
+                </div>
+            </div>
+        {% elif not object.billing_address %}
+            <div class='row'>
+                <div class='col-md-6  mx-auto '>
+                    <h1>Billing Address</h1>
+                    <hr>
+                    {% url 'checkout_address_create' as checkout_address_create %}
+                    {% include 'addresses/form.html' with form=address_form action_url=checkout_address_create address_type='billing' %}
+                </div>
+            </div>
+        {% else %}
+            <h1>Finalize Checkout:</h1>
+            <p>Cart Total: {{ object.cart.total }}</p>
+            <p>Shipping Total: {{ object.shipping_total }}</p>
+            <p>Order Total: {{ object.total }}</p>
+            <button>Checkout</button>
+        {% endif %}
+    {% endif %}
+{% endblock contentt %}

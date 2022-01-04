@@ -1,9 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from allauth.account.forms import SignupForm
+from allauth.account.forms import SignupForm, LoginForm
 from django import forms
 
 from .models import CustomUser
+
+class GuestForm(forms.Form):
+    email = forms.EmailField()
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -30,3 +33,6 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('age', 'city', 'portfolio_site', 'profile_pic')
+
+class ProductsLoginForm(LoginForm):
+    pass

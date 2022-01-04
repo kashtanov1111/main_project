@@ -1,0 +1,13 @@
+{% load crispy_forms_tags %}
+<form class='form-margin' action="{{ action_url }}" method='post'>
+
+    {% if next %}
+        <input type="hidden" name='next' value='{{ next }}'>
+    {% endif %}
+    {% if address_type %}
+        <input type="hidden" name='address_type' value='{{ address_type }}'>
+    {% endif %}
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button class='btn btn-primary my-1' type='submit'>Submit</button>
+</form>
