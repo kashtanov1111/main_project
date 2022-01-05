@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from accounts.views import guest_login_view, CustomLoginView
-from products_addresses.views import checkout_address_create_view
+from products_addresses.views import checkout_address_create_view, checkout_address_reuse_view
 
 
 urlpatterns = [
@@ -27,6 +27,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('register/guest/', guest_login_view, name='guest_register'),
     path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'), 
+    path('checkout/address/reuse/', checkout_address_reuse_view, name='checkout_address_reuse'), 
     path('user/', include('accounts.urls')),
     path('polls/', include('polls.urls')),
     path('blog/', include('blog.urls')),
