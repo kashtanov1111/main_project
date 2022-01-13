@@ -1,4 +1,5 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block content %}
 <div style='margin:-10px;'>
@@ -16,8 +17,11 @@
             <li class='nav-item'>
               <a href="{% url 'products:list' %}" class='nav-link {% if request.path == product_list_url %}active{% endif %}'>Products</a>
             </li>
+            <li class='nav-item'>
+              <a href="{% url 'products:contact_form' %}" class='nav-link {% if request.path == contact_form_url %}active{% endif %}'>Contacts</a>
+            </li>
             <li class='nav-item '>
-              <a href="{% url 'products_carts:home' %}" class="nav-link {% if request.path == cart_url %}active{% endif %}" aria-current="page">{{ request.session.cart_items }} <i class="bi bi-cart4"></i></a>
+              <a href="{% url 'products_carts:home' %}" class="nav-link {% if request.path == cart_url %}active{% endif %}" aria-current="page"><span class='navbar-cart-count'>{{ request.session.cart_items }}</span> <i class="bi bi-cart4"></i></a>
             </li>
           </ul>
           {% include 'search/snippets/search-form.html' %}
@@ -31,6 +35,6 @@
   {% endblock contentt %}
 </div>
 
-
+<script src="{% static 'js/ecommerce/main.js' %}"></script>
 {% endblock content %}
 

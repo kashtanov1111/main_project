@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from accounts.views import guest_login_view, CustomLoginView
+from products_carts.views import cart_detail_api_view
 from products_addresses.views import checkout_address_create_view, checkout_address_reuse_view
 
 
@@ -39,6 +40,7 @@ urlpatterns = [
     path('basic_app/', include('basic_app.urls')),
     path('groups/', include('groups.urls')),
     path('posts/', include('posts.urls')),
+    path('api/cart/', cart_detail_api_view, name='api-cart'),
     path('products/cart/', include('products_carts.urls')),
     path('products/', include('products.urls')),
     path('', include('pages.urls')),

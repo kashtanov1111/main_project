@@ -18,4 +18,3 @@ function changeHeaderColor(){
 
 
 setInterval('changeHeaderColor()', 1000);
-

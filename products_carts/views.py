@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 
@@ -9,6 +10,19 @@ from accounts.forms import ProductsLoginForm, GuestForm
 from accounts.models import GuestEmail
 from products_addresses.forms import AddressForm
 from products_addresses.models import Address
+
+def cart_detail_api_view(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    products = [{
+                'id': x.id,
+                'url': x.get_absolute_url(),
+                'title': x.title,
+                'price': x.price
+                }
+                 
+                  for x in cart_obj.products.all()]
+    cart_data = {'products': products, 'subtotal': cart_obj.subtotal, 'total': cart_obj.total}
+    return JsonResponse(cart_data)
 
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
@@ -24,9 +38,19 @@ def cart_update(request):
         cart_obj, new_obj = Cart.objects.new_or_get(request)
         if product_obj in cart_obj.products.all():
             cart_obj.products.remove(product_obj)
+            product_added = False
         else:
             cart_obj.products.add(product_obj)
+            product_added = True
         request.session['cart_items'] = cart_obj.products.count()
+        if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+            json_data = {
+                'added': product_added,
+                'removed': not product_added, 
+                'cartItemCount': cart_obj.products.count(),
+            }
+            return JsonResponse(json_data, status=200)
+            # return JsonResponse({'message': 'Error 400'}, status=400)
     return redirect('products_carts:home')
 
 def checkout_home(request):
