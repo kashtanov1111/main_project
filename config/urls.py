@@ -17,15 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
+from products_billing.views import payment_method_view, payment_method_createview
 from accounts.views import guest_login_view, CustomLoginView
 from products_carts.views import cart_detail_api_view
 from products_addresses.views import checkout_address_create_view, checkout_address_reuse_view
-
 
 urlpatterns = [
     path('admin-2281953/', admin.site.urls),
     path('accounts/login/', CustomLoginView.as_view(), name='account_login'),
     path('accounts/', include('allauth.urls')),
+    path('billing/payment-method/create/', payment_method_createview, name='billing-payment-method-endpoint'),
+    path('billing/payment-method/', payment_method_view, name='billing-payment-method'),
     path('register/guest/', guest_login_view, name='guest_register'),
     path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'), 
     path('checkout/address/reuse/', checkout_address_reuse_view, name='checkout_address_reuse'), 

@@ -1,8 +1,15 @@
+from email.policy import default
+from sqlite3 import Timestamp
+from xml.etree.ElementInclude import default_loader
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
+from django.urls import reverse
 
 from accounts.models import GuestEmail
+
+import stripe
+stripe.api_key = "sk_test_51KJHJ0JYFLEUlpihGDoh4daGce4N2PlMYFkja2uQvtO8H1JrUsCOICtD8MmPf53HfP3C8gy5TqmTPfCH2zqOUjWS005kxE5R7n"
 
 class BillingProfileManager(models.Manager):
     def new_or_get(self, request):
@@ -23,21 +30,143 @@ class BillingProfile(models.Model):
     user        = models.OneToOneField(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
     email       = models.EmailField()
     active      = models.BooleanField(default=True)
-    updated   = models.DateTimeField(auto_now=True)
+    updated     = models.DateTimeField(auto_now=True)
     timestamp   = models.DateTimeField(auto_now_add=True)
+    customer_id = models.CharField(max_length=120, null=True, blank=True)
 
     objects = BillingProfileManager()
 
     def __str__(self):
         return self.email
 
-#def billing_profile_created_receiver(sender, instance, created, *args, **kwargs):
-#    if created:
-#       instance.customer_id = newID
-#       instance.save() 
+    def charge(self, order_obj, card=None):
+        return Charge.objects.do(self, order_obj, card)
+    
+    def get_cards(self):
+        return self.card_set.all()
+
+    def get_payment_method_url(self):
+        return reverse('billing-payment-method')
+
+    @property
+    def has_card(self):
+        instance = self
+        card_qs = instance.get_cards()
+        return card_qs.exists()
+
+    @property
+    def default_card(self):
+        default_cards = self.get_cards().filter(active=True, default=True)
+        if default_cards.exists():
+            return default_cards.first()
+        return None
+    
+    def set_cards_inactive(self):
+        cards_qs = self.get_cards()
+        cards_qs.update(active=False)
+        return cards_qs.filter(active=True).count()
+
+def billing_profile_created_receiver(sender, instance, *args, **kwargs):
+    if not instance.customer_id and instance.email:
+        customer = stripe.Customer.create(
+            email=instance.email,
+        )
+        instance.customer_id = customer.id
+
+pre_save.connect(billing_profile_created_receiver, sender=BillingProfile)
 
 def user_created_receiver(sender, instance, created, *args, **kwargs):
     if created and instance.email:
         BillingProfile.objects.get_or_create(user=instance, email=instance.email)
 
 post_save.connect(user_created_receiver, sender=get_user_model())
+
+
+class CardManager(models.Manager):
+    def all(self, *args, **kwargs):
+        return self.get_queryset().filter(active=True)
+    def add_new(self, billing_profile, token):
+        if token:
+            card_response = stripe.Customer.create_source(
+                        billing_profile.customer_id,
+                        source=token,
+                        )
+            new_card = self.model(
+                billing_profile=billing_profile,
+                stripe_id=card_response.id,
+                brand=card_response.brand,
+                country=card_response.country,
+                exp_month=card_response.exp_month,
+                exp_year=card_response.exp_year,
+                last4=card_response.last4
+            )
+            new_card.save()
+            return new_card
+        return None
+
+
+class Card(models.Model):
+    billing_profile     = models.ForeignKey(BillingProfile, on_delete=models.CASCADE)
+    stripe_id           = models.CharField(max_length=120, null=True, blank=True)
+    brand               = models.CharField(max_length=120, null=True, blank=True)
+    country             = models.CharField(max_length=20, null=True, blank=True)
+    exp_month           = models.IntegerField(null=True, blank=True)
+    exp_year            = models.IntegerField(null=True, blank=True)
+    last4               = models.CharField(max_length=4, null=True, blank=True)
+    default             = models.BooleanField(default=True)
+    active              = models.BooleanField(default=True)
+    Timestamp           = models.DateTimeField(auto_now_add=True)
+
+    objects = CardManager()
+
+    def __str__(self):
+        return '%s %s' % (self.brand, self.last4)
+
+def new_card_post_save_receiver(sender, instance, created, *args, **kwargs):
+    if instance.default:
+        billing_profile = instance.billing_profile
+        qs = Card.objects.filter(billing_profile=billing_profile).exclude(pk=instance.pk)
+        qs.update(default=False)
+
+post_save.connect(new_card_post_save_receiver, sender=Card)
+
+class ChargeManager(models.Manager):
+    def do(self, billing_profile, order_obj, card=None):
+        card_obj = card
+        if card_obj is None:
+            cards = billing_profile.card_set.filter(default=True)
+            if cards.exists():
+                card_obj = cards.first()
+        if card_obj is None:
+            return False, 'No cards available'
+        c = stripe.Charge.create(
+            amount=int(order_obj.total * 100),
+            currency="usd",
+            customer=billing_profile.customer_id,
+            source=card_obj.stripe_id,
+            metadata={'order_id': order_obj.order_id}
+            )
+        new_charge_obj = self.model(
+            billing_profile = billing_profile,
+            stripe_id = c.id,
+            paid = c.paid,
+            refunded = c.refunded,
+            outcome = c.outcome,
+            outcome_type = c.outcome['type'],
+            seller_message = c.outcome.get('seller_message'),
+            risk_level = c.outcome.get('risk_level')
+        )
+        new_charge_obj.save()
+        return new_charge_obj.paid, new_charge_obj.seller_message
+
+class Charge(models.Model):
+    billing_profile     = models.ForeignKey(BillingProfile, on_delete=models.CASCADE)
+    stripe_id           = models.CharField(max_length=120)
+    paid                = models.BooleanField(default=False)
+    refunded            = models.BooleanField(default=False)
+    outcome             = models.TextField(null=True, blank=True)
+    outcome_type        = models.CharField(max_length=120, blank=True, null=True)
+    seller_message      = models.CharField(max_length=120, blank=True, null=True)
+    risk_level          = models.CharField(max_length=120, blank=True, null=True)
+
+    objects = ChargeManager()

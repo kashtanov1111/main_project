@@ -74,8 +74,14 @@ INSTALLED_APPS = [
     'products_orders',
     'products_billing',
     'products_addresses',
+    'analytics',
+    'marketing'
 ]
-
+MAILCHIMP_API_KEY = "182ba3b16728c2da2236d50fd967df3e-us20"
+MAILCHIMP_DATA_CENTER = "us20"
+MAILCHIMP_EMAIL_LIST_ID = "840e38888d"
+STRIPE_SECRET_KEY = "sk_test_51KJHJ0JYFLEUlpihGDoh4daGce4N2PlMYFkja2uQvtO8H1JrUsCOICtD8MmPf53HfP3C8gy5TqmTPfCH2zqOUjWS005kxE5R7n"
+STRIPE_PUB_KEY = "pk_test_51KJHJ0JYFLEUlpihzbzd97r77iRueLXEFptTgk2bMVwkeU0P8bZiOmCRQUYgornyysru3E1RAJkPgbfyXA91UIuw00QPammCyR"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware', 
     'whitenoise.middleware.WhiteNoiseMiddleware',

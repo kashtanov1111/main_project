@@ -5,6 +5,7 @@ from django.http import JsonResponse, HttpResponse
 from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404
 
+from analytics.mixins import ObjectViewedMixin
 from products_carts.models import Cart
 from .models import Product
 from .forms import ContactForm
@@ -43,7 +44,7 @@ class ProductListView(ListView):
 
 
 
-class ProductDetailSlugView(DetailView):
+class ProductDetailSlugView(ObjectViewedMixin, DetailView):
     queryset = Product.objects.all()
     template_name = 'products/product_detail.html'
 
@@ -63,4 +64,5 @@ class ProductDetailSlugView(DetailView):
         except Product.MultipleObjectsReturned:
             qs = Product.objects.filter(slug=slug, active=True)
             instance = qs.first()
+        # object_viewed_signal.send(instance.__class__, instance=instance, request=request)
         return instance

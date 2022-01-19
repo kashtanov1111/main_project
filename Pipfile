@@ -19,6 +19,8 @@ django-storages = "==1.12.3"
 boto3 = "==1.20.20"
 misaka = "==2.1.1"
 django-braces = "==1.15.0"
+stripe = "==2.64.0"
+requests = "==2.27.1"
 
 [dev-packages]
 
