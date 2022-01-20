@@ -29,6 +29,16 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'kashtanovdjango@gmail.com' 
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Python Project <kashtanovdjango@gmail.com>'
+
+MANAGERS = (
+    ('kashtanovdjango@gmail.com', 'Kashtanov Daniil')
+)
 
 # Application definition
 
