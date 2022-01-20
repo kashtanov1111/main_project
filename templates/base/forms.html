@@ -1,0 +1,16 @@
+{% extends 'products/_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block contentt %}
+<div class='col-md-6 mx-auto'>
+    {% if title %}<h1 class='my-3'>{{ title }}</h1>{% endif %}
+    <form class='form-margin' action="{{ action_url }}" method='post'>
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name='next' value='{{ next }}'>
+        {% endif %}
+        {{ form|crispy }}
+        <button class='btn btn-primary my-1' type='submit'>Save</button>
+    </form>
+</div>
+{% endblock contentt %}

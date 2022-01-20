@@ -22,6 +22,7 @@ from products_billing.views import payment_method_view, payment_method_createvie
 from accounts.views import guest_login_view, CustomLoginView
 from products_carts.views import cart_detail_api_view
 from products_addresses.views import checkout_address_create_view, checkout_address_reuse_view
+from marketing.views import MarketingPreferenceUpdateView, MailchimpWebhookView
 
 urlpatterns = [
     path('admin-2281953/', admin.site.urls),
@@ -46,6 +47,8 @@ urlpatterns = [
     path('api/cart/', cart_detail_api_view, name='api-cart'),
     path('products/cart/', include('products_carts.urls')),
     path('products/', include('products.urls')),
+    path('settings/email/', MarketingPreferenceUpdateView.as_view(), name='marketing-pref'),
+    path('webhooks/mailchimp/', MailchimpWebhookView.as_view(), name='webhooks-mailchimp'),
     path('', include('pages.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
