@@ -37,7 +37,7 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python Project <kashtanovdjango@gmail.com>'
 
 MANAGERS = (
-    ('kashtanovdjango@gmail.com', 'Kashtanov Daniil')
+    ('Kashtanov Daniil', 'kashtanovdjango@gmail.com')
 )
 
 # Application definition
