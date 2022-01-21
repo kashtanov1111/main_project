@@ -1,4 +1,5 @@
 import email
+from datetime import timedelta
 from random import random
 from sqlite3 import Timestamp
 from django.db import models
@@ -6,13 +7,17 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager, UserManager
 from django.core import validators
 from django.core.mail import send_mail
+from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
 from django.template.loader import get_template
+from django.utils import timezone
+from django.urls import reverse
 
 from .validators import CustomURLValidator
 from config.utils import random_string_generator, unique_key_generator
 # send_mail(subject, message, from_email, recipient_list, html_message)
 
+DEFAULT_ACTIVATION_DAYS = getattr(settings, 'DEFAULT_ACTIVATION_DAYS', 7)
 
 class UserManager(UserManager):
     def create_user(self, email, password=None, is_active=True, is_staff=False, is_admin=False):
@@ -26,7 +31,7 @@ class UserManager(UserManager):
         user_obj.set_password(password)
         user_obj.staff = is_staff
         user_obj.admin = is_admin
-        user_obj.active = is_active
+        user_obj.is_active = is_active
         user_obj.save(using=self.__db)
         return user_obj
     
@@ -40,7 +45,7 @@ class UserManager(UserManager):
 
 class CustomUser(AbstractUser):
     email   = models.EmailField(max_length=255, unique=True)
-    active  = models.BooleanField(default=True)
+    is_active  = models.BooleanField(default=True)
     staff   = models.BooleanField(default=False)
     admin   = models.BooleanField(default=False)
     age     = models.PositiveIntegerField(null=True, blank=True)
@@ -64,6 +69,32 @@ class CustomUser(AbstractUser):
     def is_admin(self):
         return self.admin
 
+class EmailActivationQuerySet(models.query.QuerySet):
+    def confirmable(self):
+        now = timezone.now()
+        start_range = now - timedelta(days=DEFAULT_ACTIVATION_DAYS)
+        end_range = now
+        return self.filter(
+            activated = False,
+            forced_expired = False
+        ).filter(
+            timestamp__gt=start_range,
+            timestamp__lte=end_range
+        )
+
+class EmailActivationManager(models.Manager):
+    def get_queryset(self):
+        return EmailActivationQuerySet(self.model, using=self._db)
+
+    def confirmable(self):
+        return self.get_queryset().confirmable()
+
+    def email_exists(self, email):
+        return self.get_queryset().filter(
+            Q(email=email) | Q(user__email=email)
+            ).filter(activated=False)
+
+
 class EmailActivation(models.Model):
     user            = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     email           = models.EmailField()
@@ -74,8 +105,28 @@ class EmailActivation(models.Model):
     timestamp       = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)
 
+    objects = EmailActivationManager()
+
     def __str__(self):
         return self.email
+
+    def can_activate(self):
+        qs = EmailActivation.objects.filter(pk=self.pk).confirmable()
+        if qs.exists():
+            return True
+        return False
+    
+    def activate(self):
+        if self.can_activate():
+            user = self.user
+            user.is_active = True
+            user.save()
+            self.activated = True
+            self.save()
+            return True
+        return False
+
+
 
     def regenerate(self):
         self.key = None
@@ -88,7 +139,7 @@ class EmailActivation(models.Model):
         if not self.activated and not self.forced_expired:
             if self.key:
                 base_url = getattr(settings, 'BASE_URL')
-                key_path = self.key
+                key_path = reverse('user:email-activate', kwargs={'key': self.key})
                 path = '%s%s' % (base_url, key_path)
                 context = {
                     'path': path,

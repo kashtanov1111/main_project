@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "16bb563f0555cead26827327b8588906484d36b977a57bd405a77d59773b3853"
+            "sha256": "5e47d1965237a2571a0597b8d208f09fe5829fda7f0a499da99cf809d514a205"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -34,11 +34,11 @@
         },
         "botocore": {
             "hashes": [
-                "sha256:49b304d9d4a782d7108f6a5ca0df6557da20a22b74d5bf745f02fea5cffc35ca",
-                "sha256:f733bc565f144f0ec97ffe0d51235d358ad2f5f12b331563b69d9e9227262a36"
+                "sha256:49baa1fca4483b24769f0743fbf72afe4db391f41f1fc12ea34e06036db642a4",
+                "sha256:88a314fe27cd97a0c731094c5b34db01ebe930801700e5d1b68485ebde746c3c"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==1.23.38"
+            "version": "==1.23.40"
         },
         "certifi": {
             "hashes": [
@@ -210,6 +210,13 @@
             ],
             "index": "pypi",
             "version": "==3.1.5"
+        },
+        "django-next-url-mixin": {
+            "hashes": [
+                "sha256:cab9443e7fa0a0acbd6f4abde707f9e287dc0c24c54b0ce00d86dbd390266b45"
+            ],
+            "index": "pypi",
+            "version": "==0.2.0"
         },
         "django-storages": {
             "hashes": [

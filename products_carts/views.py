@@ -64,7 +64,7 @@ def checkout_home(request):
     order_obj = None
     if cart_created or cart_obj.products.count() == 0:
         redirect('products_carts:home')
-    login_form = ProductsLoginForm()
+    login_form = ProductsLoginForm(request=request)
     guest_form = GuestForm()
     address_form = AddressForm()
     billing_address_id = request.session.get('billing_address_id', None)

@@ -2,9 +2,24 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from allauth.account.forms import SignupForm, LoginForm
 from django import forms
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from .models import CustomUser
 from .models import EmailActivation
+
+class ReactivateEmailForm(forms.Form):
+    email           = forms.EmailField()
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        qs = EmailActivation.objects.email_exists(email)
+        if not qs.exists():
+            register_link = reverse('account_signup')
+            msg = """This email does not exists, would you like to <a href='{link}'>register</a>?
+            """.format(link=register_link) 
+            raise forms.ValidationError(mark_safe(msg))
+        return email
 
 class GuestForm(forms.Form):
     email = forms.EmailField()
@@ -38,4 +53,28 @@ class UserProfileForm(forms.ModelForm):
         fields = ('age', 'city', 'portfolio_site', 'profile_pic')
 
 class ProductsLoginForm(LoginForm):
-    pass
+    def clean(self):
+        data = super().clean()
+        request = self.request
+        email = data.get('login')
+        password = data.get('password')
+        qs = CustomUser.objects.filter(email=email)
+        if qs.exists():      
+            not_active = qs.filter(is_active=False)
+            if not_active.exists():
+                link = reverse('user:resend-activation')
+                reconfirm_msg = """Go to
+                    <a href='{resend_link}'>resend confirmation email</a>
+                """.format(resend_link=link)
+                confirm_email = EmailActivation.objects.filter(email=email)
+                is_confirmable = confirm_email.confirmable().exists()
+                if is_confirmable:
+                    msg1 = 'Please check your email to confirm your account or' + reconfirm_msg.lower()
+                    raise forms.ValidationError(mark_safe(msg1))
+                email_confirm_qs = EmailActivation.objects.email_exists(email)
+                if email_confirm_qs.exists():
+                    msg2 = 'Email not confirmed. ' + reconfirm_msg
+                    raise forms.ValidationError(mark_safe(msg2))
+                if not is_confirmable and not email_confirm_qs.exists():
+                    raise forms.ValidationError('This user is inactive.')
+        return data
