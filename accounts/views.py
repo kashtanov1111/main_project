@@ -1,16 +1,26 @@
 import os
-
-from django.shortcuts import render
-from .forms import CustomUserCreationForm #, UserProfileinfoForm
-from django.urls import reverse_lazy
-from django.views import generic
-from django.conf import settings
 from allauth.account.views import LoginView
-from .models import CustomUser
-from .forms import UserProfileForm, CustomUserChangeForm, GuestForm
-from django.shortcuts import redirect, render
 
-from .models import GuestEmail
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
+from django.shortcuts import redirect, render
+from django.views import generic
+from django.views.generic import DetailView
+from django.utils.decorators import method_decorator
+from django.urls import reverse_lazy
+
+from .models import CustomUser, GuestEmail
+from .forms import UserProfileForm, CustomUserChangeForm, GuestForm, CustomUserCreationForm
+
+@login_required
+def account_home_view(request):
+    return render(request, 'accounts/home.html', {})
+
+class AccountHomeView(LoginRequiredMixin, DetailView):
+    template_name='accounts/home.html'
+    def get_object(self):
+        return self.request.user
 
 def userprofile(request):
     if request.method == 'POST':

@@ -35,6 +35,7 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python Project <kashtanovdjango@gmail.com>'
+BASE_URL = env('BASE_URL', default='https://kashtanov1.herokuapp.com/')
 
 MANAGERS = (
     ('Kashtanov Daniil', 'kashtanovdjango@gmail.com')

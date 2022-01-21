@@ -4,6 +4,7 @@ from allauth.account.forms import SignupForm, LoginForm
 from django import forms
 
 from .models import CustomUser
+from .models import EmailActivation
 
 class GuestForm(forms.Form):
     email = forms.EmailField()
@@ -26,6 +27,8 @@ class CustomSignupForm(SignupForm):
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
         user.city = self.cleaned_data['city']
+        # obj= EmailActivation.objects.create(user=user)
+        # obj.send_activation()
         user.save()
         return user
 
