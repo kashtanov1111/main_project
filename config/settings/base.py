@@ -41,6 +41,8 @@ MANAGERS = (
     ('Kashtanov Daniil', 'kashtanovdjango@gmail.com')
 )
 
+ADMINS = MANAGERS
+
 # Application definition
 
 INSTALLED_APPS = [
