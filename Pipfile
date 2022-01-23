@@ -22,6 +22,7 @@ django-braces = "==1.15.0"
 stripe = "==2.64.0"
 requests = "==2.27.1"
 django-next-url-mixin = "==0.2.0"
+boto = "==2.49.0"
 
 [dev-packages]
 

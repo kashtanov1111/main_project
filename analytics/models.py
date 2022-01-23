@@ -16,6 +16,24 @@ from .utils import get_client_ip
 from allauth.account.signals import user_logged_in
 
 User = settings.AUTH_USER_MODEL
+
+class ObjectViewedQuerySet(models.query.QuerySet):
+    def by_model(self, model_class, model_queryset=False):
+        c_type = ContentType.objects.get_for_model(model_class)
+        qs = self.filter(content_type=c_type)
+        if model_queryset:
+            viewed_ids = [x.object_id for x in qs]
+            return model_class.objects.filter(pk__in=viewed_ids)
+        return qs
+
+
+class ObjectViewedManager(models.Manager):
+    def get_queryset(self):
+        return ObjectViewedQuerySet(self.model, using=self._db)
+
+    def by_model(self, model_class, model_queryset=False):
+        return self.get_queryset().by_model(model_class, model_queryset=model_queryset)
+
 class ObjectViewed(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     ip_address      = models.CharField(max_length=120, blank=True, null=True)  
@@ -23,6 +41,8 @@ class ObjectViewed(models.Model):
     object_id       = models.PositiveIntegerField()
     content_object  = GenericForeignKey('content_type', 'object_id')
     timestamp       = models.DateTimeField(auto_now_add=True)
+
+    objects = ObjectViewedManager()
 
     def __str__(self):
         return '%s viewed %s' %(self.content_object, self.timestamp)

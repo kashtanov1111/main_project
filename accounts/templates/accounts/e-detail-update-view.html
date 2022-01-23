@@ -1,0 +1,20 @@
+{% extends 'products/_base.html' %}
+{% load crispy_forms_tags %}
+
+{% block contentt %}
+<div class='col-md-6 mx-auto'>
+    {% if title %}<h1 class='my-3'>{{ title }}</h1>{% endif %}
+    <form class='form-margin' action="{{ action_url }}" method='post'>
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name='next' value='{{ next }}'>
+        {% endif %}
+        {{ form|crispy }}
+        <label for="email">Email</label>
+        <input id='email' type="text" class='form-control' value='{{ request.user.email }}' disabled='disabled'>
+        <span class='help-text'>Cannot change email</span><br>
+        <button class='btn btn-primary my-3' type='submit'>Save</button>
+        <a href="{% url 'account_change_password' %}">Change Password</a>
+    </form>
+</div>
+{% endblock contentt %}

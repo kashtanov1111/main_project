@@ -5,7 +5,7 @@ from django import forms
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from .models import CustomUser
+from .models import CustomUser, GuestEmail
 from .models import EmailActivation
 
 class ReactivateEmailForm(forms.Form):
@@ -21,8 +21,24 @@ class ReactivateEmailForm(forms.Form):
             raise forms.ValidationError(mark_safe(msg))
         return email
 
-class GuestForm(forms.Form):
-    email = forms.EmailField()
+class GuestForm(forms.ModelForm):
+    class Meta:
+        model = GuestEmail
+        fields = [
+            'email'
+        ]
+    
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        super().__init__(*args, **kwargs)
+    
+    def save(self, commit=True):
+        obj = super().save(commit=False)
+        if commit:
+            obj.save()
+            request = self.request
+            request.session['guest_email_id'] = obj.id
+        return obj
 
 class CustomUserCreationForm(UserCreationForm):
 
@@ -36,6 +52,13 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
         model = CustomUser
         fields = ('email', 'username', 'age', 'city', 'portfolio_site', 'profile_pic')
+
+class UserEcommerceDetailChangeForm(forms.ModelForm):
+    first_name = forms.CharField(label='First Name', required=False)
+
+    class Meta:
+        model = CustomUser
+        fields = ['first_name']
 
 class CustomSignupForm(SignupForm):
     city = forms.CharField(max_length=100, required=False)

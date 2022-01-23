@@ -23,6 +23,7 @@ from accounts.views import GuestRegisterView, CustomLoginView, CustomSignUpView
 from products_carts.views import cart_detail_api_view
 from products_addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from marketing.views import MarketingPreferenceUpdateView, MailchimpWebhookView
+from products_orders.views import LibraryView
 
 urlpatterns = [
     path('admin-2281953/', admin.site.urls),
@@ -33,8 +34,10 @@ urlpatterns = [
     path('billing/payment-method/', payment_method_view, name='billing-payment-method'),
     path('register/guest/', GuestRegisterView.as_view(), name='guest_register'),
     path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'), 
+    path('library/', LibraryView.as_view(), name='library'), 
     path('checkout/address/reuse/', checkout_address_reuse_view, name='checkout_address_reuse'), 
     path('user/', include('accounts.urls')),
+    path('orders/', include('products_orders.urls')),
     path('polls/', include('polls.urls')),
     path('blog/', include('blog.urls')),
     path('blog2/', include('blog2.urls')),

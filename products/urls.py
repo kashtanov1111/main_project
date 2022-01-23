@@ -8,4 +8,5 @@ urlpatterns = [
     path('contacts/', views.contact_page, name='contact_form'),
     path('search/', include('products_search.urls')),
     path('<slug:slug>/', views.ProductDetailSlugView.as_view(), name='detail'),   
+    path('<slug:slug>/<int:pk>/', views.ProductDownloadView.as_view(), name='download'),   
 ]

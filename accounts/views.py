@@ -8,15 +8,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views import generic
-from django.views.generic import DetailView, View, FormView
+from django.views.generic import DetailView, View, FormView, UpdateView, CreateView
 from django.views.generic.edit import FormMixin
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy, reverse
 from django.utils.safestring import mark_safe
 
 from .models import CustomUser, GuestEmail, EmailActivation
-from .forms import UserProfileForm, ReactivateEmailForm, CustomUserChangeForm, GuestForm, CustomUserCreationForm, ProductsLoginForm
-from config.mixins import NextUrlMixin
+from .forms import UserEcommerceDetailChangeForm, UserProfileForm, ReactivateEmailForm, CustomUserChangeForm, GuestForm, CustomUserCreationForm, ProductsLoginForm
+from config.mixins import NextUrlMixin, RequestFormAttachMixin
 
 @login_required
 def account_home_view(request):
@@ -119,17 +119,19 @@ def userprofile(request):
 #         return redirect(redirect_path)
 #     return redirect('/register/')
 
-class GuestRegisterView(NextUrlMixin, FormView):
+class GuestRegisterView(NextUrlMixin, RequestFormAttachMixin, CreateView):
     form_class = GuestForm
     default_next = '/accounts/signup/'
 
+    def get_success_url(self):
+        return self.get_next_url()
+
     def form_invalid(self, form):
         return redirect(self.default_next)
-    def form_valid(self, form):
-        email = form.cleaned_data.get('email')
-        new_guest_email = GuestEmail.objects.create(email=email)
-        self.request.session['guest_email_id'] = new_guest_email.id
-        return redirect(self.get_next_url())
+    # def form_valid(self, form):
+    #     email = form.cleaned_data.get('email')
+    #     new_guest_email = GuestEmail.objects.create(email=email)
+    #     return redirect(self.get_next_url())
 
 class CustomLoginView(LoginView):
     form_class = ProductsLoginForm
@@ -144,3 +146,18 @@ class CustomSignUpView(SignupView):
     def form_valid(self, form):
         self.user = form.save(self.request)
         return redirect('account_login')
+
+class UserEcommerceDetailUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = UserEcommerceDetailChangeForm
+    template_name = 'accounts/e-detail-update-view.html'
+
+    def get_object(self):
+        return self.request.user
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['title'] = 'Change Your Account Details'
+        return context
+
+    def get_success_url(self):
+        return reverse('user:user_ecommerce_profile')

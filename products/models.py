@@ -1,11 +1,16 @@
+from fileinput import filename
 import random
 import os
+from django.core.files.storage import FileSystemStorage 
+from django.conf import settings
 from django.db.models import Q
 from django.db import models
 from django.db.models.signals import pre_save
 from django.urls import reverse
 
-from config.utils import unique_slug_generator
+from config.aws.download.utils import AWSDownload
+from config.utils import unique_slug_generator, get_filename
+from config.storage_backends import ProtectedMediaStorage
 
 def get_filename_ext(filename):
     base_name = os.path.basename(filename)
@@ -61,6 +66,7 @@ class Product(models.Model):
     featured    = models.BooleanField(default=False)
     active      = models.BooleanField(default=True)
     timestamp   = models.DateTimeField(auto_now_add=True)
+    is_digital  = models.BooleanField(default=False)
 
     objects = ProductManager()
 
@@ -70,8 +76,70 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    def get_downloads(self):
+        qs = self.productfile_set.all()
+        return qs
+
+
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
 
 pre_save.connect(product_pre_save_receiver, sender=Product)
+
+def upload_product_file_loc(instance, filename):
+    slug = instance.product.slug
+    id_ = instance.id
+    if id_ is None:
+        Klass = instance.__class__
+        qs = Klass.objects.all().order_by('-pk')
+        if qs.exists():
+            id_ = qs.first().id + 1
+        else:
+            id_ = 0
+    if not slug:
+        slug = unique_slug_generator(instance.product)
+    location = 'product/{slug}/{id}/'.format(slug=slug, id=id_)
+    return location + filename
+        
+
+class ProductFile(models.Model):
+    product         = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name            = models.CharField(max_length=120, null=True, blank=True )
+    file            = models.FileField(
+                        upload_to=upload_product_file_loc, 
+                        storage=ProtectedMediaStorage()
+                        )#FileSystemStorage(location=settings.PROTECTED_ROOT)
+    free            = models.BooleanField(default=False)
+    user_required   = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.file.name)
+
+    @property
+    def display_name(self):
+        og_name = get_filename(self.file.name)
+        if self.name:
+            return self.name
+        return og_name
+
+    def get_default_url(self):
+        return self.product.get_absolute_url()
+
+    def generate_download_url(self):
+        bucket = getattr(settings, 'AWS_STORAGE_BUCKET_NAME')
+        region = getattr(settings, 'S3DIRECT_REGION')
+        access_key = getattr(settings, 'AWS_ACCESS_KEY_ID')
+        secret_key = getattr(settings, 'AWS_SECRET_ACCESS_KEY')
+        if not secret_key or not access_key or not bucket or not region :
+            return '/product-not-found/'
+        path = 'protected/{file_path}'.format(file_path=str(self.file))
+        aws_dl_object =  AWSDownload(access_key, secret_key, bucket, region)
+        file_url = aws_dl_object.generate_url(path, new_filename=self.display_name)
+        return file_url
+
+
+    def get_download_url(self):
+        return reverse('products:download',
+                    kwargs={'slug': self.product.slug, 'pk': self.pk}
+                    )
