@@ -83,6 +83,7 @@
             </div>
           </div>
         </nav>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js'></script>
         
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         
@@ -94,14 +95,14 @@
         <div class='main-part'>
             {% if messages %}
             <div class="alert alert-success  messages">
-                {% for message in messages %}
-                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
-                <br>
+              {% for message in messages %}
+              <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+              <br>
                 {% endfor %}
-            </div>
-            {% endif %}
-            {% block content %}
-            {% endblock content %}
+              </div>
+              {% endif %}
+              {% block content %}
+              {% endblock content %}
         </div>
         
         
