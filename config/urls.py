@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.flatpages import urls as flatpages_urls
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -25,6 +26,7 @@ from products_carts.views import cart_detail_api_view
 from products_addresses.views import checkout_address_create_view, checkout_address_reuse_view
 from marketing.views import MarketingPreferenceUpdateView, MailchimpWebhookView
 from products_orders.views import LibraryView
+
 
 urlpatterns = [
     path('admin-2281953/', admin.site.urls),
@@ -42,9 +44,13 @@ urlpatterns = [
     path('user/', include('accounts.urls')),
     path('orders/', include('products_orders.urls')),
     path('polls/', include('polls.urls')),
+    path('contact/', include('contact.urls')),
     path('blog/', include('blog.urls')),
     path('blog2/', include('blog2.urls')),
     path('books/', include('books.urls')),
+    path('organizer/', include('organizer.urls')),
+    path('sublog/', include('sublog.urls')),
+    path('page/', include(flatpages_urls)),
     path('doc/', include('doc.urls')),
     path('first_app/', include('first_app.urls')),
     path('companies/', include('companies.urls')),

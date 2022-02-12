@@ -32,13 +32,14 @@ ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'kashtanovdjango@gmail.com' 
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+SERVER_EMAIL = 'kashtanovdjango@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Python Project <kashtanovdjango@gmail.com>'
 BASE_URL = env('BASE_URL', default='https://kashtanov1.herokuapp.com/')
 
 MANAGERS = (
-    ('Kashtanov Daniil', 'kashtanovdjango@gmail.com')
+    ('Kashtanov Daniil', 'kashtanovdjango@gmail.com'),
 )
 
 ADMINS = MANAGERS
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.flatpages',
 
     #3rd party
     'crispy_forms',
@@ -69,6 +71,7 @@ INSTALLED_APPS = [
     'accounts',
     'blog',
     'blog2',
+    'contact',
     'pages',
     'books',
     'polls',
@@ -80,6 +83,7 @@ INSTALLED_APPS = [
     'ssocial',
     'posts',
     'groups',
+    'organizer',
     'products',
     'products_search',
     'products_tags',
@@ -87,6 +91,7 @@ INSTALLED_APPS = [
     'products_orders',
     'products_billing',
     'products_addresses',
+    'sublog',
     'analytics',
     'marketing'
 ]
@@ -105,6 +110,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -236,6 +242,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True

@@ -5,6 +5,13 @@
 {% url 'products_carts:home' as cart_url %}
 {% url 'products:contact_form' as contact_form_url %}
 {% url 'user:user_ecommerce_profile' as user_ecommerce_profile_url %}
+{% url 'sublog:post_list' as sublog_post_list %}
+{% url 'organizer:startup_list' as organizer_startup_list %}
+{% url 'organizer:tag_list' as organizer_tag_list %}
+{% url 'contact' as contact %}
+
+{% load flatpages %}
+{% get_flatpages as flatpages %}
 <html>
     <head>
         <meta charset='utf-8'>
@@ -50,6 +57,7 @@
                     <li><a class="dropdown-item" href="{% url 'blog2:post_list' %}">Blog2</a></li>
                     <li><a class="dropdown-item" href="{% url 'groups:all' %}">Star Social</a></li>
                     <li><a class="dropdown-item" href="{% url 'products:list' %}">eCommerce</a></li>
+                    <li><a class="dropdown-item" href="{% url 'sublog:post_list' %}">Startup Blog</a></li>
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -92,19 +100,24 @@
         <script src="https://js.stripe.com/v3/"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jsrender/1.0.11/jsrender.min.js'></script>
         {% include 'js_templates.html' %}
-        <div class='main-part'>
-            {% if messages %}
-            <div class="alert alert-success  messages">
-              {% for message in messages %}
-              <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
-              <br>
-                {% endfor %}
-              </div>
-              {% endif %}
-              {% block content %}
-              {% endblock content %}
-        </div>
-        
-        
+        <main class='flex-shrink-0'>
+          <div class=' main-part'>
+              {% if messages %}
+              <div class="alert alert-success  messages">
+                {% for message in messages %}
+                <span{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+                <br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                {% block content %}
+                {% endblock content %}
+          </div>
+        </main>
+        <footer class="footer mt-auto py-3 bg-dark">
+          <div class="container">
+            <span class="text-muted">&copy; 2022 Kashtanov Company</span>
+          </div>
+        </footer>
     </body>
 </html>

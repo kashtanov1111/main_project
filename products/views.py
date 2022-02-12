@@ -40,6 +40,7 @@ class ProductListView(ListView):
         return context
 
     def get_queryset(self, *args, **kwargs):
+        print('haahha')
         request = self.request
         return Product.objects.all()
 

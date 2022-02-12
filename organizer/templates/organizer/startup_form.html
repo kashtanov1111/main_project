@@ -1,0 +1,20 @@
+{% extends 'organizer/base_organizer.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{ block.super }} - Create Startup
+{% endblock title %}
+
+{% block contentt %}
+    <div>
+        <div>
+            <form 
+                action="{% url 'organizer:startup_create' %}" 
+                method='post'>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type='submit'>Create Startup</button>
+            </form>
+        </div>
+    </div>
+{% endblock contentt %}

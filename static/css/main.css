@@ -16,6 +16,7 @@
 }
 .main-part {
   margin: 10px;
+  min-height: 100vh;
 }
 .link-without-underline {
   text-decoration: None;
