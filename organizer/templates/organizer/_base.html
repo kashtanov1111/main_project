@@ -1,6 +1,5 @@
 {% extends '_base.html' %}
-{% load flatpages %}
-{% get_flatpages as flatpages %}
+
 
 {% block content %}
 <div style='margin:-10px;'>
@@ -27,13 +26,10 @@
               <li class='nav-item'>
                 <a href="{% url 'contact' %}" class='nav-link {% if request.path == contact %}active{% endif %}'>Contact</a>
               </li>
-              {% for page in flatpages %}
-                <li class='nav-item'>
-                  <a class='nav-link {% if request.path == page.get_absolute_url %}active{% endif %}' href="{{ page.get_absolute_url}}">
-                    {{ page.title }}
-                  </a>
-                </li>
-              {% endfor %}
+              <li class='nav-item'>
+                {% url 'organizer:about' as about %}
+                <a href="{% url 'organizer:about' %}" class='nav-link {% if request.path == about %}active{% endif %}'>Contact</a>
+              </li>
             </ul>
           </div>
       </div>

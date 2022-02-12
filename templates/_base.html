@@ -10,8 +10,6 @@
 {% url 'organizer:tag_list' as organizer_tag_list %}
 {% url 'contact' as contact %}
 
-{% load flatpages %}
-{% get_flatpages as flatpages %}
 <html>
     <head>
         <meta charset='utf-8'>
@@ -30,6 +28,7 @@
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
         <link rel="stylesheet" href="{% static 'css/stripe-custom-style.css' %}">
         <link rel="stylesheet" href="{% static 'simplesocial/css/master.css' %}">
+        {% block head %}{% endblock head %}
     </head>
     <body>
         <nav class="navbar  sticky-top navbar-expand-lg navbar-dark bg-dark ">

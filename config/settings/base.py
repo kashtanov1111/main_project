@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django.contrib.flatpages',
 
     #3rd party
     'crispy_forms',
@@ -72,6 +71,7 @@ INSTALLED_APPS = [
     'blog',
     'blog2',
     'contact',
+    'core',
     'pages',
     'books',
     'polls',

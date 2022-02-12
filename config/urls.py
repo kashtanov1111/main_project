@@ -14,7 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.contrib.flatpages import urls as flatpages_urls
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -50,7 +49,6 @@ urlpatterns = [
     path('books/', include('books.urls')),
     path('organizer/', include('organizer.urls')),
     path('sublog/', include('sublog.urls')),
-    path('page/', include(flatpages_urls)),
     path('doc/', include('doc.urls')),
     path('first_app/', include('first_app.urls')),
     path('companies/', include('companies.urls')),
